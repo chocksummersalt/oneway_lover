@@ -1,13 +1,7 @@
 import OpenAI from 'openai';
 import dotenv from 'dotenv';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-import { readFileSync } from 'fs';
 
 dotenv.config();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 // questions 데이터를 직접 정의 (서버에서 사용)
 const questions = [

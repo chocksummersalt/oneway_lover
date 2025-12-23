@@ -10,7 +10,18 @@ function App() {
   const handleComplete = (finalAnswers) => {
     setAnswers(finalAnswers)
     // 답변을 조합하여 타입 코드 생성
-    const typeCode = finalAnswers[1] + finalAnswers[2] + finalAnswers[3] + finalAnswers[4]
+    const typeCode = (finalAnswers[1] || '') + 
+                     (finalAnswers[2] || '') + 
+                     (finalAnswers[3] || '') + 
+                     (finalAnswers[4] || '')
+    
+    // 모든 답변이 있는지 확인
+    if (typeCode.length !== 4) {
+      console.error('타입 코드 생성 실패:', finalAnswers)
+      alert('설문을 완료해주세요.')
+      return
+    }
+    
     setResult(typeCode)
   }
 

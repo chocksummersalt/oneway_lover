@@ -76,9 +76,9 @@
    - Settings → Environment Variables
    - 다음 변수 추가:
      ```
-     VITE_API_URL=https://your-backend-url.railway.app
+     VITE_API_URL=https://onewaylover-production.up.railway.app
      ```
-   (또는 Render URL 사용)
+   - Environment: Production, Preview, Development 모두 선택
 
 4. **배포**
    - "Deploy" 클릭
