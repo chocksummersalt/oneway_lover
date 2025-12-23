@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: oneway-lover-api
+    env: node
+    buildCommand: npm install
+    startCommand: node server/index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: PORT
+        value: 10000
+

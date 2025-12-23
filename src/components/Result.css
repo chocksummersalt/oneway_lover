@@ -1,0 +1,249 @@
+.result {
+  padding: 40px 30px;
+  animation: fadeIn 0.5s ease;
+}
+
+.result-card {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.result-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding-bottom: 30px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.result-title {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.result-type-name {
+  font-size: 2rem;
+  color: #667eea;
+  margin-bottom: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.result-description {
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+.result-detail {
+  margin-bottom: 30px;
+  padding: 25px;
+  background: linear-gradient(135deg, #667eea10 0%, #764ba210 100%);
+  border-radius: 12px;
+  border-left: 4px solid #667eea;
+}
+
+.result-detail h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.result-detail p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.8;
+}
+
+.result-traits {
+  margin-bottom: 40px;
+}
+
+.result-traits h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.traits-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.trait-badge {
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.ai-analysis-section {
+  margin-bottom: 30px;
+  padding: 25px;
+  background: linear-gradient(135deg, #f093fb10 0%, #f5576c10 100%);
+  border-radius: 12px;
+  border-left: 4px solid #f5576c;
+}
+
+.ai-analysis-section h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.ai-button {
+  padding: 15px 30px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  width: 100%;
+}
+
+.ai-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
+}
+
+.ai-loading {
+  text-align: center;
+  padding: 20px;
+}
+
+.spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #f5576c;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.ai-loading p {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.ai-error {
+  padding: 15px;
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 8px;
+  color: #856404;
+}
+
+.ai-error p {
+  margin-bottom: 10px;
+}
+
+.retry-button {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  border: 1px solid #ffc107;
+  border-radius: 6px;
+  background: white;
+  color: #856404;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.retry-button:hover {
+  background: #ffc107;
+  color: white;
+}
+
+.ai-analysis-content {
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  line-height: 1.8;
+  color: #555;
+  font-size: 1rem;
+  white-space: pre-wrap;
+}
+
+.result-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.restart-button,
+.share-button {
+  padding: 15px 30px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.restart-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.restart-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.share-button {
+  background: white;
+  color: #667eea;
+  border: 2px solid #667eea;
+}
+
+.share-button:hover {
+  background: #667eea;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+@media (max-width: 768px) {
+  .result {
+    padding: 30px 20px;
+  }
+  
+  .result-type-name {
+    font-size: 1.6rem;
+  }
+  
+  .result-description {
+    font-size: 1rem;
+  }
+  
+  .result-detail {
+    padding: 20px;
+  }
+  
+  .result-actions {
+    flex-direction: column;
+  }
+  
+  .restart-button,
+  .share-button {
+    width: 100%;
+  }
+}
+
