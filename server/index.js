@@ -28,6 +28,18 @@ app.options('/api/analyze', (req, res) => {
   res.status(200).end();
 });
 
+// 루트 경로 (Railway health check용)
+app.get('/', (req, res) => {
+  res.status(200).json({ 
+    status: 'ok', 
+    message: 'Oneway Lover API Server is running',
+    endpoints: {
+      health: '/health',
+      analyze: '/api/analyze'
+    }
+  });
+});
+
 // 헬스체크 엔드포인트
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', message: 'Server is running' });
@@ -68,8 +80,39 @@ app.post('/api/analyze', async (req, res) => {
   }
 });
 
-app.listen(PORT, '0.0.0.0', () => {
+// 에러 핸들링 미들웨어
+app.use((err, req, res, next) => {
+  console.error('서버 오류:', err);
+  res.status(500).json({ 
+    error: '서버 내부 오류가 발생했습니다.',
+    details: process.env.NODE_ENV === 'development' ? err.message : undefined
+  });
+});
+
+// 404 핸들러
+app.use((req, res) => {
+  res.status(404).json({ error: '요청한 경로를 찾을 수 없습니다.' });
+});
+
+const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`서버가 포트 ${PORT}에서 실행 중입니다.`);
-  console.log(`헬스체크: http://localhost:${PORT}/health`);
+  console.log(`헬스체크: http://0.0.0.0:${PORT}/health`);
+});
+
+// 프로세스 종료 시 서버 정리
+process.on('SIGTERM', () => {
+  console.log('SIGTERM 신호 수신, 서버 종료 중...');
+  server.close(() => {
+    console.log('서버가 정상적으로 종료되었습니다.');
+    process.exit(0);
+  });
+});
+
+process.on('SIGINT', () => {
+  console.log('SIGINT 신호 수신, 서버 종료 중...');
+  server.close(() => {
+    console.log('서버가 정상적으로 종료되었습니다.');
+    process.exit(0);
+  });
 });
 
