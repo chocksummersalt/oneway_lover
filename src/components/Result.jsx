@@ -26,15 +26,33 @@ function Result({ typeCode, answers, onRestart }) {
         }),
       })
 
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.error || 'AI 분석 요청 실패')
+      // 응답이 비어있는지 확인
+      const text = await response.text()
+      
+      if (!text) {
+        throw new Error('서버로부터 응답을 받지 못했습니다. 백엔드 서버가 실행 중인지 확인해주세요.')
       }
 
-      const data = await response.json()
+      let data
+      try {
+        data = JSON.parse(text)
+      } catch (parseError) {
+        console.error('JSON 파싱 오류:', parseError, '응답:', text)
+        throw new Error('서버 응답 형식이 올바르지 않습니다.')
+      }
+
+      if (!response.ok) {
+        throw new Error(data.error || data.details || 'AI 분석 요청 실패')
+      }
+
+      if (!data.analysis) {
+        throw new Error('AI 분석 결과를 받지 못했습니다.')
+      }
+
       setAiAnalysis(data.analysis)
     } catch (err) {
-      setError(err.message)
+      const errorMessage = err.message || '알 수 없는 오류가 발생했습니다.'
+      setError(errorMessage)
       console.error('AI 분석 오류:', err)
     } finally {
       setIsLoading(false)

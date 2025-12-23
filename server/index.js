@@ -34,17 +34,31 @@ app.post('/api/analyze', async (req, res) => {
     const { answers, typeCode, typeInfo } = req.body;
 
     if (!answers || !typeCode || !typeInfo) {
-      return res.status(400).json({ error: '필수 정보가 누락되었습니다.' });
+      return res.status(400).json({ 
+        error: '필수 정보가 누락되었습니다.',
+        analysis: null
+      });
     }
 
     const aiAnalysis = await analyzeAnswers(answers, typeCode, typeInfo);
 
-    res.json({ analysis: aiAnalysis });
+    if (!aiAnalysis) {
+      return res.status(500).json({ 
+        error: 'AI 분석 결과를 생성하지 못했습니다.',
+        analysis: null
+      });
+    }
+
+    res.status(200).json({ 
+      analysis: aiAnalysis,
+      success: true
+    });
   } catch (error) {
     console.error('AI 분석 오류:', error);
     res.status(500).json({ 
       error: 'AI 분석 중 오류가 발생했습니다.',
-      details: error.message 
+      details: error.message,
+      analysis: null
     });
   }
 });
