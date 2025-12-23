@@ -16,17 +16,22 @@ const allowedOrigins = [
 ].filter(Boolean);
 
 app.use(cors({
-  origin: function (origin, callback) {
-    // origin이 없거나 허용된 origin이면 통과
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(null, true); // 개발 중에는 모든 origin 허용
-    }
-  },
-  credentials: true
+  origin: '*', // 배포 환경에서는 모든 origin 허용
+  credentials: true,
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
+
+// OPTIONS 요청 처리 (CORS preflight)
+app.options('/api/analyze', (req, res) => {
+  res.status(200).end();
+});
+
+// 헬스체크 엔드포인트
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', message: 'Server is running' });
+});
 
 // ChatGPT API를 통한 분석 엔드포인트
 app.post('/api/analyze', async (req, res) => {
@@ -63,7 +68,8 @@ app.post('/api/analyze', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`서버가 포트 ${PORT}에서 실행 중입니다.`);
+  console.log(`헬스체크: http://localhost:${PORT}/health`);
 });
 
