@@ -5,6 +5,12 @@ import { analyzeAnswers } from './ai-service.js';
 
 dotenv.config();
 
+// 서버 시작 시 환경 변수 확인
+console.log('=== 서버 시작 ===');
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('PORT:', process.env.PORT || '3001 (기본값)');
+console.log('OPENAI_API_KEY:', process.env.OPENAI_API_KEY ? '설정됨' : '설정 안됨');
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -95,8 +101,29 @@ app.use((req, res) => {
 });
 
 const server = app.listen(PORT, '0.0.0.0', () => {
-  console.log(`서버가 포트 ${PORT}에서 실행 중입니다.`);
-  console.log(`헬스체크: http://0.0.0.0:${PORT}/health`);
+  console.log(`✅ 서버가 포트 ${PORT}에서 실행 중입니다.`);
+  console.log(`✅ 헬스체크: http://0.0.0.0:${PORT}/health`);
+  console.log(`✅ 루트 경로: http://0.0.0.0:${PORT}/`);
+});
+
+// 서버 시작 에러 처리
+server.on('error', (error) => {
+  console.error('❌ 서버 시작 오류:', error);
+  if (error.code === 'EADDRINUSE') {
+    console.error(`포트 ${PORT}가 이미 사용 중입니다.`);
+  }
+  process.exit(1);
+});
+
+// 처리되지 않은 예외 처리
+process.on('uncaughtException', (error) => {
+  console.error('❌ 처리되지 않은 예외:', error);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('❌ 처리되지 않은 Promise 거부:', reason);
+  process.exit(1);
 });
 
 // 프로세스 종료 시 서버 정리
